@@ -1,0 +1,15 @@
+.aws
+.azure
+.bash_history
+.config
+.docker
+.dotfiles/
+.landscape
+.local
+.motd_shown
+.nvm
+.ssh/
+.sudo_as_admin_successful
+.vscode-server
+.gitconfig
+Projects
