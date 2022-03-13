@@ -3,3 +3,4 @@
 # <hostname>	<port>	<incl. subdomains>	<created>	<max-age>
 update.code.visualstudio.com	0	0	1646384418	31536000
 raw.githubusercontent.com	0	0	1646385049	31536000
+go.dev	0	1	1647188901	31536000
