@@ -2,6 +2,7 @@
 .azure
 .bash_history
 .cache
+.cargo
 .config
 .docker
 .dotfiles/
@@ -14,16 +15,17 @@
 .mozilla
 .npm 
 .nvm
-.pdepend
 .pam_environment
+.pdepend
 .pki
+.rustup
 .ssh/
 .sudo_as_admin_successful
 .vscode
 .vscode-server
+bin
 Downloads
 go
 Projects
 snap
 src
-bin

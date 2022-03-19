@@ -122,3 +122,7 @@ fi
 if [ -d ~/bin ]; then
     export PATH=$PATH:~/bin
 fi
+
+if [ -f "$HOME/.cargo/env" ]; then
+    . "$HOME/.cargo/env"
+fi
