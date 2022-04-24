@@ -19,8 +19,10 @@
 .pdepend
 .pki
 .rustup
+.sqlite_history
 .ssh/
 .sudo_as_admin_successful
+.viminfo
 .vscode
 .vscode-server
 bin
