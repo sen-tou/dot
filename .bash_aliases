@@ -11,5 +11,5 @@ alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo
 
 # git
 alias gco='git checkout'
-alias gcob= 'git checkout -b '
+alias gcob='git checkout -b '
 alias gca='git commit -am '
