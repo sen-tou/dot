@@ -1,3 +1,4 @@
+.anydesk
 .aws
 .azure
 .bash_history
@@ -25,9 +26,11 @@
 .viminfo
 .vscode
 .vscode-server
+Applications
 bin
 Downloads
 go
 Projects
 snap
 src
+vscode:
