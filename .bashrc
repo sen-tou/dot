@@ -120,6 +120,10 @@ if [ -d /usr/local/go/bin ]; then
     export PATH=$PATH:/usr/local/go/bin
 fi
 
+if [ -d ~/.local/bin ]; then
+    export PATH=$PATH:~/.local/bin
+fi
+
 if [ -d ~/go/bin ]; then
     export PATH=$PATH:~/go/bin
 fi
