@@ -26,7 +26,11 @@
 .viminfo
 .vscode
 .vscode-server
+.wget-hsts
+.zcompdump
+.zsh_history
 Applications
+Bilder
 bin
 Downloads
 go
@@ -34,4 +38,3 @@ Projects
 snap
 src
 vscode:
-Bilder
