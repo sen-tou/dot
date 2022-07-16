@@ -16,6 +16,7 @@
 .mozilla
 .npm 
 .nvm
+.oh-my-zsh
 .pam_environment
 .pdepend
 .pki
@@ -28,7 +29,9 @@
 .vscode-server
 .wget-hsts
 .zcompdump
+.zcompdump-steve-5.8
 .zsh_history
+.zshrc.pre-oh-my-zsh
 Applications
 Bilder
 bin
