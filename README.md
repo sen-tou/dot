@@ -1,5 +1,10 @@
 # Stvbyr dot files
 
+These are my dot files that I am currently using.
+
+**Note:** There are of course no tools in this repo. You have to install them in
+addition to using this repo. For example zsh and oh-my-zsh.
+
 ## Installation
 
 ```sh
@@ -13,6 +18,8 @@ Options:
     -b Backup dotfiles
     -V Print version
 ```
+
+`./init_dotfiles.sh -i` will install the dot files.
 
 **Note:** A backup will be created for all files that would be affected. After that
 all files in this repo will replace the once in your home dir.

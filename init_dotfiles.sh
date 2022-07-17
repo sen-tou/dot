@@ -30,7 +30,7 @@ function backup {
     exit
 }
 
-# -r
+# -i
 function install() {
     if [[ ! -d "$LOCALREPO_DIR" || ! "$(ls -A $LOCALREPO_DIR)" ]]
     then
@@ -49,7 +49,7 @@ if [[ ${#} -eq 0 ]]; then
    usage
 fi
 
-while getopts ":hbr:iV" opt
+while getopts ":hbiV" opt
 do
     case "${opt}" in
         h)
