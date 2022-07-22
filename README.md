@@ -21,7 +21,7 @@ Options:
 
 `./init_dotfiles.sh -i` will install the dot files.
 
-**Note:** A backup will be created for all files that would be affected. After that
+**Note:** A backup should be created with the -b option for all files that would be affected before installing. After that
 all files in this repo will replace the once in your home dir.
 
 If you wanna create your own dotfile repo from this make sure to check your
