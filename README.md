@@ -8,10 +8,12 @@ addition to using this repo. For example zsh and oh-my-zsh.
 ## Installation
 
 ```sh
-cd ~ && wget -O- https://raw.githubusercontent.com/stvbyr/dot/main/init_dotfiles.sh
+cd ~ && curl -O https://raw.githubusercontent.com/stvbyr/dot/main/init_dotfiles.sh && chmod +x ./init_dotfiles.sh
 ```
 
 ```txt
+Usage: init_dotfiles.sh [option]
+
 Options:
     -h Output usage
     -i Install the dot files, a backup of all affected files will be created
