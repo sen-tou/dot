@@ -1,6 +1,6 @@
 #!/bin/bash
 
-VERSION="$(basename $0) 0.2.0"
+VERSION="$(basename $0) 0.2.1"
 
 TMP_DIR="$HOME/tmpdotfiles"
 LOCALREPO_DIR="$HOME/.dotfiles"
@@ -39,14 +39,14 @@ function backup {
     dot "ls-tree -r --full-name --name-only main" |
         xargs -I "{}" rsync --ignore-missing-args "$HOME/{}" "$BACKUP_FOLDER/{}"
     printf "Backup created in %s\n" $BACKUP_FOLDER
-    exit
 }
 
 # -i
 function install() {    
     download
+    backup
     rsync --recursive --verbose --exclude '.git' $TMP_DIR/ $HOME/
-    rm -r $TMP_DIR
+    rm -rf $TMP_DIR
 
     exit
 }
