@@ -70,6 +70,10 @@ function _install_ohmyzsh {
     sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 }
 
+function _install_p10k {
+    git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
+}
+
 # -I
 function install_deps {
     # install zsh
@@ -79,6 +83,10 @@ function install_deps {
 
     if ! [ -d "$HOME/.oh-my-zsh" ]; then
         _install_ohmyzsh
+    fi
+
+    if ! [ -d "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k" ]; then
+        _install_p10k
     fi
 }
 
