@@ -13,6 +13,7 @@
 .gnupg
 .landscape
 .lemminx
+.lesshst
 .local
 .motd_shown
 .mozilla
@@ -37,6 +38,7 @@
 .wget-hsts
 .zcompdump
 .zcompdump-*
+.zhistory
 .zsh_history
 .zshrc.pre-oh-my-zsh
 Applications
@@ -49,7 +51,5 @@ Projects
 Schreibtisch/
 snap
 src
-vscode:
 Vorlagen
-.zhistory
-.lesshst
+vscode:
