@@ -9,7 +9,6 @@
 .docker
 .dotfile*
 .dotfiles/
-.gitconfig
 .gnupg
 .landscape
 .lemminx
