@@ -1,9 +1,7 @@
-# Stvbyr dot files
+# Stvbyr dotfiles
 
-These are my dot files that I am currently using.
+These are my dotfiles that I am currently using.
 
-**Note:** There are of course no tools in this repo. You have to install them in
-addition to using this repo. For example zsh and oh-my-zsh.
 **Note:** I do not take responsibility for lost files. Read this manual carefully
 and take a look at the source yourself. If you spot something I would be happy to
 receive an issue/pr.  Use at your own risk.
@@ -26,7 +24,8 @@ Usage: init_dotfiles.sh [options]
 
 Options:
     -h Output usage
-    -i Install the dot files, a backup of all affected files will be created
+    -i Install the dotfiles, a backup of all affected files will be created
+    -I Install dependencies that the dotfiles refer to
     -d Download dotfiles (no install)
     -b Backup dotfiles (only works if the project has been downloaded via -d or -i)
     -V Print version
@@ -34,10 +33,14 @@ Options:
 
 4. A backup should be created with the `-b` option for all files that would be
 affected before installing. Use the `-d` option first to download the files.
-[@see Backup](## Backup)
+[@see Backup](#backup)
 
-5. `./init_dotfiles.sh -i` will install the dot files. (It will download the files
+5. `./init_dotfiles.sh -i` will install the dotfiles. (It will download the files
 again and sync it with your home folder)
+
+**Optional:** You can also use the `-I` option to install dependencies that are
+required for my dotfiles to work. Please make sure to check the script so you
+understand what is installed and how.
 
 ### Making it your home
 

@@ -17,11 +17,11 @@ function usage {
     printf "\n"
     printf "Options:\n"
     printf "    -h Output usage\n"
-    printf "    -i Install the dot files, a backup of all affected files will be created\n"
+    printf "    -i Install the dotfiles, a backup of all affected files will be created\n"
+    printf "    -I Install dependencies that the dotfiles refer to\n"
     printf "    -d Download dotfiles\n"
     printf "    -b Backup dotfiles (only works if the project has been downloaded via -d or -i)\n"
     printf "    -V Print version\n"
-    exit
 }
 
 # -d
@@ -38,25 +38,55 @@ function backup {
     mkdir -p "$BACKUP_FOLDER"
     dot "ls-tree -r --full-name --name-only main" |
         xargs -I "{}" rsync --ignore-missing-args "$HOME/{}" "$BACKUP_FOLDER/{}"
+
     printf "Backup created in %s\n" $BACKUP_FOLDER
 }
 
 # -i
-function install() {    
+function install {    
+    echo "installing dotfiles"
     download
     backup
     rsync --recursive --verbose --exclude '.git' $TMP_DIR/ $HOME/
     rm -rf $TMP_DIR
+}
 
-    exit
+function _install_zsh {
+    echo "installing zsh ..."
+    if command -v apt &> /dev/null; then
+        sudo apt install zsh
+        return
+    fi
+
+    if command -v pacman &> /dev/null; then
+        sudo pacman -Sy zsh
+        return
+    fi
+}
+
+function _install_ohmyzsh {
+    echo "installing ohmyzsh ..."
+    
+    sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+}
+
+# -I
+function install_deps {
+    # install zsh
+    if ! command -v zsh &> /dev/null; then
+        _install_zsh
+    fi
+
+    if ! [ -d "$HOME/.oh-my-zsh" ]; then
+        _install_ohmyzsh
+    fi
 }
 
 if [[ ${#} -eq 0 ]]; then
    usage
 fi
 
-while getopts ":hdbiV" opt
-do
+while getopts ":hdbiVI" opt; do
     case "${opt}" in
         h)
             usage
@@ -69,6 +99,9 @@ do
             ;;
         i)
             install
+            ;;
+        I)
+            install_deps
             ;;
         V)
             echo $VERSION
