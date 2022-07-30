@@ -11,7 +11,7 @@ function dot {
     git --git-dir="$LOCALREPO_DIR" --work-tree="$HOME" $1
 }
 
-# -h 
+# -h
 function usage {
     printf "Usage: %s [options]\n" $(basename $0)
     printf "\n"
@@ -29,7 +29,7 @@ function download {
     [ -d "$LOCALREPO_DIR" ] && rm -rf "$LOCALREPO_DIR"
     [ -d "$TMP_DIR" ] && rm -rf "$TMP_DIR"
 
-    git clone --separate-git-dir="$LOCALREPO_DIR" git@github.com:stvbyr/dot.git $TMP_DIR   
+    git clone --separate-git-dir="$LOCALREPO_DIR" git@github.com:stvbyr/dot.git $TMP_DIR
 }
 
 # -b
@@ -43,7 +43,7 @@ function backup {
 }
 
 # -i
-function install {    
+function install {
     echo "installing dotfiles"
     download
     backup
@@ -53,12 +53,12 @@ function install {
 
 function _install_zsh {
     echo "installing zsh ..."
-    if command -v apt &> /dev/null; then
+    if command -v apt &>/dev/null; then
         sudo apt install zsh
         return
     fi
 
-    if command -v pacman &> /dev/null; then
+    if command -v pacman &>/dev/null; then
         sudo pacman -Sy zsh
         return
     fi
@@ -66,7 +66,7 @@ function _install_zsh {
 
 function _install_ohmyzsh {
     echo "installing ohmyzsh ..."
-    
+
     sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 }
 
@@ -77,7 +77,7 @@ function _install_p10k {
 # -I
 function install_deps {
     # install zsh
-    if ! command -v zsh &> /dev/null; then
+    if ! command -v zsh &>/dev/null; then
         _install_zsh
     fi
 
@@ -91,36 +91,36 @@ function install_deps {
 }
 
 if [[ ${#} -eq 0 ]]; then
-   usage
+    usage
 fi
 
 while getopts ":hdbiVI" opt; do
     case "${opt}" in
-        h)
-            usage
-            ;;
-        d)
-            download
-            ;;
-        b)
-            backup
-            ;;
-        i)
-            install
-            ;;
-        I)
-            install_deps
-            ;;
-        V)
-            echo $VERSION
-            ;;
-        :)
-            echo "$0: -$OPTARG needs an argument." >&2
-            exit 1
-            ;;
-        ?)
-            echo "Invalid option: -${OPTARG}." >&2
-            exit 2
-            ;;
+    h)
+        usage
+        ;;
+    d)
+        download
+        ;;
+    b)
+        backup
+        ;;
+    i)
+        install
+        ;;
+    I)
+        install_deps
+        ;;
+    V)
+        echo $VERSION
+        ;;
+    :)
+        echo "$0: -$OPTARG needs an argument." >&2
+        exit 1
+        ;;
+    ?)
+        echo "Invalid option: -${OPTARG}." >&2
+        exit 2
+        ;;
     esac
-done 
+done
