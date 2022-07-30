@@ -52,7 +52,12 @@ function install {
 }
 
 function _install_zsh {
+    if command -v zsh &>/dev/null; then
+        return
+    fi
+
     echo "installing zsh ..."
+
     if command -v apt &>/dev/null; then
         sudo apt install zsh
         return
@@ -65,29 +70,51 @@ function _install_zsh {
 }
 
 function _install_ohmyzsh {
+    if [ -d "$HOME/.oh-my-zsh" ]; then
+        return
+    fi
+
     echo "installing ohmyzsh ..."
 
     sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 }
 
 function _install_p10k {
+    if [ -d "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k" ]; then
+        return
+    fi
+
+    echo "installing p10k ..."
+
     git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
+}
+
+function _install_delta {
+    if command -v delta &>/dev/null; then
+        return
+    fi
+
+    echo "installing delta ..."
+
+    if command -v pacman &>/dev/null; then
+        sudo pacman -S git-delta
+        return
+    fi
+
+    if command -v dpkg &>/dev/null; then
+        curl -SL https://github.com/dandavison/delta/releases/download/0.13.0/git-delta_0.13.0_amd64.deb -o delta.deb
+        sudo dpkg -i delta.deb
+        rm delta.deb
+        return
+    fi
 }
 
 # -I
 function install_deps {
-    # install zsh
-    if ! command -v zsh &>/dev/null; then
-        _install_zsh
-    fi
-
-    if ! [ -d "$HOME/.oh-my-zsh" ]; then
-        _install_ohmyzsh
-    fi
-
-    if ! [ -d "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k" ]; then
-        _install_p10k
-    fi
+    _install_zsh
+    _install_ohmyzsh
+    _install_p10k
+    _install_delta
 }
 
 if [[ ${#} -eq 0 ]]; then

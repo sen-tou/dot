@@ -41,6 +41,7 @@
 .zhistory
 .zsh_history
 .zshrc.pre-oh-my-zsh
+*.local
 Applications
 Bilder
 bin
