@@ -78,11 +78,17 @@ HIST_STAMPS="yyyy-mm-dd"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git)
+plugins=(
+  git
+  zsh-autosuggestions
+)
 
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
+
+# zsh-autosuggestionsgit config --list
+ZSH_AUTOSUGGEST_STRATEGY=(match_prev_cmd completion)
 
 # export MANPATH="/usr/local/man:$MANPATH"
 
