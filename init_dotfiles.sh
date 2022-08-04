@@ -109,12 +109,20 @@ function _install_delta {
     fi
 }
 
+function _install_omz_plugins {
+    [ -f "$HOME/omz_plugin_update.sh" ] && source "$HOME/omz_plugin_update.sh" && return
+
+    echo "oh-my-zsh plugin updater is not there!" 
+    exit 3
+}
+
 # -I
 function install_deps {
     _install_zsh
     _install_ohmyzsh
     _install_p10k
     _install_delta
+    _install_omz_plugins
 }
 
 if [[ ${#} -eq 0 ]]; then
