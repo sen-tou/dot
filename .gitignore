@@ -30,6 +30,7 @@
 .sqlite_history
 .ssh/
 .sudo_as_admin_successful
+.tldr
 .var/
 .viminfo
 .vscode
