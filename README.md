@@ -4,7 +4,7 @@ These are my dotfiles that I am currently using.
 
 **Note:** I do not take responsibility for lost files. Read this manual carefully
 and take a look at the source yourself. If you spot something I would be happy to
-receive an issue/pr.  Use at your own risk.
+receive an issue/pr. Use at your own risk.
 
 ## Installation with script
 
@@ -27,8 +27,7 @@ Options:
     -i Install the dotfiles, a backup of all affected files will be created
     -I Install dependencies that the dotfiles refer to
     -d Download dotfiles (no install)
-    -b Backup dotfiles (only works if the project has been downloaded via -d or -i)
-    -V Print version
+    -b Backup dotfiles (only works if the project has been downloaded via -d or -i Install the dotfiles, a backup of all affected files will be created
 ```
 
 4. A backup should be created with the `-b` option for all files that would be
