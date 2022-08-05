@@ -1,6 +1,6 @@
 #!/bin/bash
 
-VERSION="$(basename $0) 0.7.1"
+VERSION="$(basename $0) 0.7.2"
 
 TMP_DIR="$HOME/tmpdotfiles"
 LOCALREPO_DIR="$HOME/.dotfiles"
@@ -71,6 +71,7 @@ function _install_zsh {
 
 function _install_ohmyzsh {
     if [ -d "$HOME/.oh-my-zsh" ]; then
+        git -C "$HOME/.oh-my-zsh" pull
         return
     fi
 
