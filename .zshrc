@@ -86,6 +86,9 @@ plugins=(
 
 source $ZSH/oh-my-zsh.sh
 
+# z
+source $HOME/.oh-my-zsh/custom/shell-tools/z/z.sh
+
 # User configuration
 
 # zsh-autosuggestionsgit config --list

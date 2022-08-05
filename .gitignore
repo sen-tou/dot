@@ -36,6 +36,7 @@
 .vscode
 .vscode-server
 .wget-hsts
+.z
 .zcompdump
 .zcompdump-*
 .zhistory

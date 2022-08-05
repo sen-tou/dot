@@ -1,9 +1,8 @@
 #!/bin/bash
 
-VERSION="$(basename $0) 0.7.2"
-
 TMP_DIR="$HOME/tmpdotfiles"
 LOCALREPO_DIR="$HOME/.dotfiles"
+ZSH_CUSTOM="$HOME/.oh-my-zsh/custom"
 
 set -e
 
@@ -21,7 +20,6 @@ function usage {
     printf "    -I Install dependencies that the dotfiles refer to\n"
     printf "    -d Download dotfiles\n"
     printf "    -b Backup dotfiles (only works if the project has been downloaded via -d or -i)\n"
-    printf "    -V Print version\n"
 }
 
 # -d
@@ -70,6 +68,7 @@ function _install_zsh {
 }
 
 function _install_ohmyzsh {
+    echo "installing oh-my-zsh ..."
     if [ -d "$HOME/.oh-my-zsh" ]; then
         git -C "$HOME/.oh-my-zsh" pull
         return
@@ -81,11 +80,12 @@ function _install_ohmyzsh {
 }
 
 function _install_p10k {
+    echo "installing p10k ..."
+
     if [ -d "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k" ]; then
+        git -C ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k pull
         return
     fi
-
-    echo "installing p10k ..."
 
     git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
 }
@@ -110,6 +110,17 @@ function _install_delta {
     fi
 }
 
+function _install_z {
+    echo "installing z ..."
+
+    if [ ! -d "$ZSH_CUSTOM/shell-tools/z" ]; then 
+        git clone https://github.com/rupa/z.git "$ZSH_CUSTOM/shell-tools"
+        return
+    fi
+
+    git -C "$ZSH_CUSTOM/shell-tools/z" pull
+}
+
 function _install_omz_plugins {
     [ -f "$HOME/omz_plugin_update.sh" ] && source "$HOME/omz_plugin_update.sh" && return
 
@@ -123,6 +134,7 @@ function install_deps {
     _install_ohmyzsh
     _install_p10k
     _install_delta
+    _install_z
     _install_omz_plugins
 }
 
@@ -146,9 +158,6 @@ while getopts ":hdbiVI" opt; do
         ;;
     I)
         install_deps
-        ;;
-    V)
-        echo $VERSION
         ;;
     :)
         echo "$0: -$OPTARG needs an argument." >&2
