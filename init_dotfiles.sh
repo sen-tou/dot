@@ -1,6 +1,6 @@
 #!/bin/bash
 
-VERSION="$(basename $0) 0.2.1"
+VERSION="$(basename $0) 0.7.1"
 
 TMP_DIR="$HOME/tmpdotfiles"
 LOCALREPO_DIR="$HOME/.dotfiles"
