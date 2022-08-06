@@ -114,7 +114,7 @@ function _install_z {
     echo "installing z ..."
 
     if [ ! -d "$ZSH_CUSTOM/shell-tools/z" ]; then 
-        git clone https://github.com/rupa/z.git "$ZSH_CUSTOM/shell-tools"
+        git clone https://github.com/rupa/z.git "$ZSH_CUSTOM/shell-tools/z"
         return
     fi
 
