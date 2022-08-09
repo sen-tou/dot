@@ -20,6 +20,7 @@
 .npm 
 .nvm
 .oh-my-zsh
+.os_specifics
 .pam_environment
 .pdepend
 .pki
@@ -32,6 +33,7 @@
 .sudo_as_admin_successful
 .tldr
 .var/
+.vim
 .viminfo
 .vscode
 .vscode-server

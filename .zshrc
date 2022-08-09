@@ -117,7 +117,13 @@ ZSH_AUTOSUGGEST_STRATEGY=(match_prev_cmd completion)
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-source ~/.bash_aliases
+if [ -f "$HOME/.bash_aliases" ]; then
+    source "$HOME/.bash_aliases"
+fi
+
+if [ -f "$HOME/.zaliases" ]; then
+    source "$HOME/.zaliases"
+fi
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
