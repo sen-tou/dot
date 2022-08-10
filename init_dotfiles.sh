@@ -68,25 +68,24 @@ function _install_zsh {
 }
 
 function _install_ohmyzsh {
-    echo "installing oh-my-zsh ..."
     if [ -d "$HOME/.oh-my-zsh" ]; then
+        echo "updating oh-my-zsh ..."
         git -C "$HOME/.oh-my-zsh" pull
         return
     fi
 
     echo "installing ohmyzsh ..."
-
     sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 }
 
 function _install_p10k {
-    echo "installing p10k ..."
-
     if [ -d "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k" ]; then
+        echo "updating p10k ..."
         git -C ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k pull
         return
     fi
 
+    echo "installing p10k ..."
     git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
 }
 
@@ -111,13 +110,13 @@ function _install_delta {
 }
 
 function _install_z {
-    echo "installing z ..."
-
     if [ ! -d "$ZSH_CUSTOM/shell-tools/z" ]; then 
+        echo "updating z ..."
         git clone https://github.com/rupa/z.git "$ZSH_CUSTOM/shell-tools/z"
-        return
+         return
     fi
 
+    echo "installing z ..."
     git -C "$ZSH_CUSTOM/shell-tools/z" pull
 }
 
