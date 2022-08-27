@@ -12,14 +12,27 @@ function dot {
 
 # -h
 function usage {
-    printf "Usage: %s [options]\n" $(basename $0)
+    color="\x1b["
+    colorEnd="\x1b[0m"
+    green="32m"
+
+    printf "\n"
+    printf "================================================================\n"
+    printf "Usage: ${color}${green}%s [proto] [-{options}]${colorEnd}\n" $(basename $0)
+    printf "\n"
+    printf "Arguments:\n"
+    printf "    proto: [ssh, https] specify how to download the repo \n"
     printf "\n"
     printf "Options:\n"
     printf "    -h Output usage\n"
-    printf "    -i Install the dotfiles, a backup of all affected files will be created\n"
+    printf "    -i Install the dotfiles, a backup of all affected files\n" 
+    printf "       will be created\n"
     printf "    -I Install dependencies that the dotfiles refer to\n"
     printf "    -d Download dotfiles\n"
-    printf "    -b Backup dotfiles (only works if the project has been downloaded via -d or -i)\n"
+    printf "    -b Backup dotfiles (only works if the project has been\n" 
+    printf "       downloaded via -d or -i)\n"
+    printf "================================================================\n"
+    printf "\n"
 }
 
 # -d
@@ -27,7 +40,18 @@ function download {
     [ -d "$LOCALREPO_DIR" ] && rm -rf "$LOCALREPO_DIR"
     [ -d "$TMP_DIR" ] && rm -rf "$TMP_DIR"
 
-    git clone --separate-git-dir="$LOCALREPO_DIR" git@github.com:stvbyr/dot.git $TMP_DIR
+    if [ "$1" = "ssh" ]; then
+        git clone --separate-git-dir="$LOCALREPO_DIR" git@github.com:stvbyr/dot.git $TMP_DIR
+        return
+    fi
+
+    if [ "$1" = "https" ]; then
+        git clone --separate-git-dir="$LOCALREPO_DIR" https://github.com/stvbyr/dot.git $TMP_DIR
+        return
+    fi
+
+    printf "[%s] is not a valid protocol. Allowed protocols are ssh and https.\n" $1
+    exit 1
 }
 
 # -b
@@ -43,7 +67,7 @@ function backup {
 # -i
 function install {
     echo "installing dotfiles"
-    download
+    download $1
     backup
     rsync --recursive --verbose --exclude '.git' $TMP_DIR/ $HOME/
     rm -rf $TMP_DIR
@@ -110,10 +134,10 @@ function _install_delta {
 }
 
 function _install_z {
-    if [ ! -d "$ZSH_CUSTOM/shell-tools/z" ]; then 
+    if [ ! -d "$ZSH_CUSTOM/shell-tools/z" ]; then
         echo "updating z ..."
         git clone https://github.com/rupa/z.git "$ZSH_CUSTOM/shell-tools/z"
-         return
+        return
     fi
 
     echo "installing z ..."
@@ -123,7 +147,7 @@ function _install_z {
 function _install_omz_plugins {
     [ -f "$HOME/omz_plugin_update.sh" ] && source "$HOME/omz_plugin_update.sh" && return
 
-    echo "oh-my-zsh plugin updater is not there!" 
+    echo "oh-my-zsh plugin updater is not there!"
     exit 3
 }
 
@@ -141,19 +165,28 @@ if [[ ${#} -eq 0 ]]; then
     usage
 fi
 
+# first command specifies the protocol to use
+proto=ssh
+# it is optional so we're only able to shift if there are more than 1 argument
+if [[ $# -gt 1 ]]; then
+    proto=${1:-ssh}
+    # this shifts the position of the arguments to the left making the second argument the first. we need this because the next block (getopts) expects the options at position $1 which would be $2 without shift
+    shift
+fi
+
 while getopts ":hdbiVI" opt; do
     case "${opt}" in
     h)
         usage
         ;;
     d)
-        download
+        download $proto
         ;;
     b)
         backup
         ;;
     i)
-        install
+        install $proto
         ;;
     I)
         install_deps
