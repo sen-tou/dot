@@ -161,6 +161,13 @@ function install_deps {
     _install_omz_plugins
 }
 
+function changes_since_last_tag {
+    LATEST_TAG=$(dot "describe --tags --abbrev=0")
+    echo "Files changed: \n"
+    dot "diff --name-only $LATEST_TAG HEAD"
+    dot "diff $LATEST_TAG HEAD"
+}
+
 if [[ ${#} -eq 0 ]]; then
     usage
 fi
@@ -174,7 +181,7 @@ if [[ $# -gt 1 ]]; then
     shift
 fi
 
-while getopts ":hdbiVI" opt; do
+while getopts ":hdbiVIc" opt; do
     case "${opt}" in
     h)
         usage
@@ -190,6 +197,9 @@ while getopts ":hdbiVI" opt; do
         ;;
     I)
         install_deps
+        ;;
+    c)
+        changes_since_last_tag
         ;;
     :)
         echo "$0: -$OPTARG needs an argument." >&2
