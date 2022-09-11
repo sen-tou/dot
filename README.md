@@ -20,13 +20,14 @@ cd ~ && curl -O https://raw.githubusercontent.com/stvbyr/dot/main/init_dotfiles.
 Usage: init_dotfiles.sh [proto] [-{options}]
 
 Arguments:
-    proto: [ssh, https] specify how to download the repo
+    proto: [ssh, https] specify how to download the repo 
 
 Options:
     -h Output usage
     -i Install the dotfiles, a backup of all affected files
        will be created
     -I Install dependencies that the dotfiles refer to
+    -c Show changes since last version
     -d Download dotfiles
     -b Backup dotfiles (only works if the project has been
        downloaded via -d or -i)

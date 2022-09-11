@@ -28,6 +28,7 @@ function usage {
     printf "    -i Install the dotfiles, a backup of all affected files\n" 
     printf "       will be created\n"
     printf "    -I Install dependencies that the dotfiles refer to\n"
+    printf "    -c Show changes since last version\n"
     printf "    -d Download dotfiles\n"
     printf "    -b Backup dotfiles (only works if the project has been\n" 
     printf "       downloaded via -d or -i)\n"
@@ -161,6 +162,7 @@ function install_deps {
     _install_omz_plugins
 }
 
+# -c
 function changes_since_last_tag {
     LATEST_TAG=$(dot "describe --tags --abbrev=0")
     echo "Files changed: \n"
