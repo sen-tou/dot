@@ -1,3 +1,4 @@
+
 .anydesk
 .apport-ignore.xml
 .aws
@@ -33,12 +34,12 @@
 .sqlite_history
 .ssh/
 .sudo_as_admin_successful
+.themes
 .tldr
 .var/
 .vim
 .viminfo
-.vscode
-.vscode-server
+.vscode*
 .wget-hsts
 .z
 .zcompdump
