@@ -82,12 +82,18 @@ plugins=(
   git
   zsh-autosuggestions
   zsh-syntax-highlighting
+  zsh-completions
 )
 
 source $ZSH/oh-my-zsh.sh
 
+# load auto completions
+rm -rf $HOME/.zcompdump*
+fpath=($ZSH/custom/plugins/zsh-completions/src $fpath)
+autoload -U compinit && compinit
+
 # z
-source $HOME/.oh-my-zsh/custom/shell-tools/z/z.sh
+source $ZSH/custom/shell-tools/z/z.sh
 
 # User configuration
 
