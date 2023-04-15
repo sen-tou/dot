@@ -70,7 +70,7 @@ function install {
     echo "installing dotfiles"
     download $1
     backup
-    rsync --recursive --verbose --exclude '.git' $TMP_DIR/ $HOME/
+    rsync --recursive --verbose --exclude '.git' --exclude 'init_dotfiles.sh' $TMP_DIR/ $HOME/
     rm -rf $TMP_DIR
 }
 
@@ -100,7 +100,7 @@ function _install_ohmyzsh {
     fi
 
     echo "installing ohmyzsh ..."
-    sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+    sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended --keep-zshrc
 }
 
 function _install_p10k {
