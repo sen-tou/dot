@@ -25,10 +25,12 @@ function usage {
     printf "\n"
     printf "Options:\n"
     printf "    -h Output usage\n"
-    printf "    -i Install the dotfiles, a backup of all affected files\n" 
+    printf "    -i only install dotfiles, a backup of all affected files\n" 
     printf "       will be created\n"
     printf "    -I Install dependencies that the dotfiles refer to\n"
     printf "    -c Show changes since last version\n"
+    printf "    -t Show changes since last version\n"
+    printf "    -f full install of dotfiles and dependencies\n"
     printf "    -d Download dotfiles\n"
     printf "    -b Backup dotfiles (only works if the project has been\n" 
     printf "       downloaded via -d or -i)\n"
@@ -71,7 +73,13 @@ function install {
     download $1
     backup
     rsync --recursive --verbose --exclude '.git' --exclude 'init_dotfiles.sh' $TMP_DIR/ $HOME/
-    rm -rf $TMP_DIR
+}
+
+# -t
+function cleanup {
+    if [ -d "$TMP_DIR" ]; then
+        rm -rf $TMP_DIR
+    fi
 }
 
 function _install_zsh {
@@ -170,6 +178,13 @@ function changes_since_last_tag {
     dot "diff $LATEST_TAG HEAD"
 }
 
+# -f
+function fullinstall {
+    install $1
+    install_deps
+    cleanup
+}
+
 if [[ ${#} -eq 0 ]]; then
     usage
 fi
@@ -183,7 +198,7 @@ if [[ $# -gt 1 ]]; then
     shift
 fi
 
-while getopts ":hdbiVIc" opt; do
+while getopts ":hdbiVIctf" opt; do
     case "${opt}" in
     h)
         usage
@@ -202,6 +217,12 @@ while getopts ":hdbiVIc" opt; do
         ;;
     c)
         changes_since_last_tag
+        ;;
+    t)
+        cleanup
+        ;;
+    t)
+        fullinstall $proto
         ;;
     :)
         echo "$0: -$OPTARG needs an argument." >&2
