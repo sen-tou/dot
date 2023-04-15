@@ -16,7 +16,7 @@ su - $NEW_USER <<EOF
 echo "Hello from $NEW_USER's home directory: \$HOME"
 
 # download the dotfiles and make them executable
-cd $HOME && curl -O https://raw.githubusercontent.com/stvbyr/dot/main/init_dotfiles.sh && chmod +x ./init_dotfiles.sh
+cd $HOME && curl -O https://raw.githubusercontent.com/stvbyr/dot/oh-my-zsh-fix-install/init_dotfiles.sh && chmod +x ./init_dotfiles.sh
 
 # install the dotfiles
 init_dotfiles.sh -i && init_dotfiles.sh -I
