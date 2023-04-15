@@ -7,7 +7,7 @@ ZSH_CUSTOM="$HOME/.oh-my-zsh/custom"
 set -e
 
 # Check that the script is being run as root
-if [[ $EUID -ne 0 ]]; then
+if [[ $(id -u) -ne 0 ]]; then
    echo "This script must be run as root"
    exit 1
 fi
