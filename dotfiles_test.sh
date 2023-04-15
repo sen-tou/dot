@@ -1,5 +1,13 @@
 #!/bin/bash
 
+set -e
+
+# exit when first argument is not set
+if [ $# -eq 0 ]; then
+    echo "Please provide a username for the test. Do not use an existing user or else they will be deleted."
+    exit 1
+fi
+
 # Get the new username from the first parameter
 NEW_USER=$1
 

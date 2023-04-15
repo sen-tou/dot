@@ -6,6 +6,12 @@ ZSH_CUSTOM="$HOME/.oh-my-zsh/custom"
 
 set -e
 
+# Check that the script is being run as root
+if [[ $EUID -ne 0 ]]; then
+   echo "This script must be run as root"
+   exit 1
+fi
+
 function dot {
     git --git-dir="$LOCALREPO_DIR" --work-tree="$HOME" $1
 }
@@ -29,7 +35,7 @@ function usage {
     printf "       will be created\n"
     printf "    -I Install dependencies that the dotfiles refer to\n"
     printf "    -c Show changes since last version\n"
-    printf "    -t Show changes since last version\n"
+    printf "    -t cleanup installation artifacts\n"
     printf "    -f full install of dotfiles and dependencies\n"
     printf "    -d Download dotfiles\n"
     printf "    -b Backup dotfiles (only works if the project has been\n" 
