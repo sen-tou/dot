@@ -6,12 +6,6 @@ ZSH_CUSTOM="$HOME/.oh-my-zsh/custom"
 
 set -e
 
-# Check that the script is being run as root
-if [[ $(id -u) -ne 0 ]]; then
-   echo "This script must be run as root"
-   exit 1
-fi
-
 function dot {
     git --git-dir="$LOCALREPO_DIR" --work-tree="$HOME" $1
 }
