@@ -3,7 +3,7 @@
 # Get the new username from the first parameter
 NEW_USER=$1
 
-# branch to be tested agains
+# git branch to be tested against
 TEST_BRANCH=${2:-'main'}
 
 # Check that the script is being run as root
@@ -35,15 +35,23 @@ echo "Hello from $NEW_USER's home directory: \$HOME"
 # download the dotfiles and make them executable
 cd \$HOME && curl -O https://raw.githubusercontent.com/stvbyr/dot/$TEST_BRANCH/init_dotfiles.sh && chmod +x ./init_dotfiles.sh
 
-# install the dotfiles
+# download the dotfiles
 ./init_dotfiles.sh https -d
+
+# switch to the configured branch and sync home with these files
 git --git-dir="\$LOCALREPO_DIR" --work-tree="\$TMP_DIR" checkout $TEST_BRANCH
 rsync --recursive --verbose --exclude '.git' --exclude 'init_dotfiles.sh' \$TMP_DIR/ \$HOME/
 
+# install dependencies and set default shell, cleanup afterwards
 ./init_dotfiles.sh https -I
 ./init_dotfiles.sh https -t
 
-echo \$0
+# confirm that the shell is zsh and is set as default
+if [ "\$0" = "zsh" ] && [ "$(which "$SHELL")" = "$(which zsh)" ]; then
+    echo "[ OK ] shell is set to zsh"
+else
+    echo "[ FAIL ] zsh wasn't setup correctly"
+fi
 
 # Switch back to the original user account
 exit
