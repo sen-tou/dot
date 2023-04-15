@@ -169,7 +169,8 @@ function install_deps {
     _install_z
     _install_omz_plugins
 
-    chsh -s $(which zsh)
+    echo $(whoami)
+    sudo chsh -s $(which zsh) $(whoami)
     zsh
 }
 

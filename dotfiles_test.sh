@@ -6,11 +6,20 @@ NEW_USER=$1
 # branch to be tested agains
 TEST_BRANCH=${2:-'main'}
 
+# Check that the script is being run as root
+if [[ $EUID -ne 0 ]]; then
+   echo "This script must be run as root"
+   exit 1
+fi
+
 # Create the new user account with a home directory and default shell
 useradd -m -s /bin/bash $NEW_USER
 
 # Set the password for the new user account
 echo "${NEW_USER}:Pass_word123" | chpasswd
+
+# Allow the new user to run privileged commands without a password
+echo "$NEW_USER ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/$NEW_USER
 
 # Switch to the new user account
 su - $NEW_USER <<EOF
@@ -34,11 +43,14 @@ rsync --recursive --verbose --exclude '.git' --exclude 'init_dotfiles.sh' \$TMP_
 ./init_dotfiles.sh https -I
 ./init_dotfiles.sh https -t
 
+echo \$0
+
 # Switch back to the original user account
 exit
 EOF
 
-su - $NEW_USER
+# Remove the passwordless sudo rule for the new user
+rm /etc/sudoers.d/$NEW_USER
 
 # Delete the test user
 userdel -r $NEW_USER
