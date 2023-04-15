@@ -168,6 +168,9 @@ function install_deps {
     _install_delta
     _install_z
     _install_omz_plugins
+
+    chsh -s $(which zsh)
+    zsh
 }
 
 # -c

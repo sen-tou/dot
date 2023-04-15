@@ -5,6 +5,7 @@ NEW_USER=$1
 
 # branch to be tested agains
 TEST_BRANCH=${2:-'main'}
+
 # Create the new user account with a home directory and default shell
 useradd -m -s /bin/bash $NEW_USER
 
@@ -15,6 +16,9 @@ echo "${NEW_USER}:Pass_word123" | chpasswd
 su - $NEW_USER <<EOF
 
 TMP_DIR="\$HOME/tmpdotfiles"
+LOCALREPO_DIR="\$HOME/.dotfiles"
+
+set -e
 
 # Run your command here
 echo "Hello from $NEW_USER's home directory: \$HOME"
@@ -24,8 +28,9 @@ cd \$HOME && curl -O https://raw.githubusercontent.com/stvbyr/dot/$TEST_BRANCH/i
 
 # install the dotfiles
 ./init_dotfiles.sh https -d
-git --git-dir="\$TMP_DIR" checkout $TEST_BRANCH
+git --git-dir="\$LOCALREPO_DIR" --work-tree="\$TMP_DIR" checkout $TEST_BRANCH
 rsync --recursive --verbose --exclude '.git' --exclude 'init_dotfiles.sh' \$TMP_DIR/ \$HOME/
+
 ./init_dotfiles.sh https -I
 ./init_dotfiles.sh https -t
 
