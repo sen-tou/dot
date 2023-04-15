@@ -23,15 +23,17 @@ echo "Hello from $NEW_USER's home directory: \$HOME"
 cd \$HOME && curl -O https://raw.githubusercontent.com/stvbyr/dot/$TEST_BRANCH/init_dotfiles.sh && chmod +x ./init_dotfiles.sh
 
 # install the dotfiles
-init_dotfiles.sh -d
+./init_dotfiles.sh https -d
 git --git-dir="\$TMP_DIR" checkout $TEST_BRANCH
 rsync --recursive --verbose --exclude '.git' --exclude 'init_dotfiles.sh' \$TMP_DIR/ \$HOME/
-init_dotfiles.sh -I
-init_dotfiles.sh -t
+./init_dotfiles.sh https -I
+./init_dotfiles.sh https -t
 
 # Switch back to the original user account
 exit
 EOF
+
+su - $NEW_USER
 
 # Delete the test user
 userdel -r $NEW_USER
