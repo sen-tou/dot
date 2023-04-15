@@ -16,24 +16,7 @@ cd ~ && curl -O https://raw.githubusercontent.com/stvbyr/dot/main/init_dotfiles.
 
 ### Make yourself familiar with the script
 
-```txt
-Usage: init_dotfiles.sh [proto] -{options}
-
-Arguments:
-    proto: [ssh, https] specify how to download the repo 
-
-Options:
-    -h Output usage
-    -i only install dotfiles, a backup of all affected files
-       will be created
-    -I Install dependencies that the dotfiles refer to
-    -c Show changes since last version
-    -t cleanup installation artifacts
-    -f full install of dotfiles and dependencies
-    -d Download dotfiles
-    -b Backup dotfiles (only works if the project has been
-       downloaded via -d or -i)
-```
+`./init_dotfiles.sh https -h` to get a help page.
 
 ### Full install
 
@@ -82,12 +65,13 @@ For example: `~/.dotfile_backup/2022-07-24-17-14-46`
 ## Testing
 
 Included is a test file that you can use to test changes to your dotfiles. It
-will creates a new user that you can specify and deletes it afterwards.
+will create a new user that you can specify and deletes it afterwards. You can
+specify a develop branch to test your changes to your install script.
 
 ```txt
 Usage: dotfiles_test.sh user [branch]
 
 Arguments:
-    user: specify the name of the new user that you want to test (don't use an existing user, they will be deleted after the script has finished running)
-    branch: git branch you want to use for testing, default branch is main
+    user: Specify the name of the new user that you want to test (don't use an existing user, they will be deleted after the script has finished running)
+    branch: Git branch you want to use for testing, default branch is main
 ```
