@@ -23,12 +23,4 @@ function update {
     install_cargo_completions
 }
 
-# got from https://stackoverflow.com/questions/226703/how-do-i-prompt-for-yes-no-cancel-input-in-a-linux-shell-script
-while true; do
-    read -p "Do want to update oh-my-zsh plugins? (y | n)" yn
-    case $yn in
-        [Yy]* ) update; break;;
-        [Nn]* ) exit;;
-        * ) echo "Please answer yes or no.";;
-    esac
-done
+update

@@ -8,38 +8,29 @@ receive an issue/pr. Use at your own risk.
 
 ## Installation with script
 
-1. Download the install script
+### Download the install script
 
 ```sh
 cd ~ && curl -O https://raw.githubusercontent.com/stvbyr/dot/main/init_dotfiles.sh && chmod +x ./init_dotfiles.sh
 ```
 
-2. Make yourself familiar with the script
+### Make yourself familiar with the script
 
-```txt
-Usage: init_dotfiles.sh [proto] [-{options}]
+`./init_dotfiles.sh https -h` to get a help page.
 
-Arguments:
-    proto: [ssh, https] specify how to download the repo 
+### Full install
 
-Options:
-    -h Output usage
-    -i Install the dotfiles, a backup of all affected files
-       will be created
-    -I Install dependencies that the dotfiles refer to
-    -c Show changes since last version
-    -d Download dotfiles
-    -b Backup dotfiles (only works if the project has been
-       downloaded via -d or -i)
-```
+Use `./init_dotfiles.sh https -f` to get a full install. This will setup your
+   home directory as well as install all dependencies and changes your default
+   shell to zsh
 
-3. A backup should be created with the `-b` option for all files that would be
-affected before installing. Use the `-d` option first to download the files.
-[@see Backup](#backup)
+### Alternate install
 
-4. Use `./init_dotfiles.sh https -i` where you want the repo to be readonly and `./init_dotfiles.sh -i` where you can make modifications.
+Use `./init_dotfiles.sh https -i` where you want the repo to be readonly and
+`./init_dotfiles.sh -i` where you can make modifications. This will only setup
+your home directory but will not install any dependencies for the dotfiles.
 
-**Optional:** After installing you can also use the `-I` option to install dependencies that are
+**Optional:** After installing you can use the `-I` option to install dependencies that are
 required for my dotfiles to work. Please make sure to check the script so you
 understand what is installed and how.
 
@@ -70,3 +61,17 @@ already (or installed).
 The folder `.dotfile_backup` contains all backups created with ISO date.
 
 For example: `~/.dotfile_backup/2022-07-24-17-14-46`
+
+## Testing
+
+Included is a test file that you can use to test changes to your dotfiles. It
+will create a new user that you can specify and deletes it afterwards. You can
+specify a develop branch to test your changes to your install script.
+
+```txt
+Usage: dotfiles_test.sh user [branch]
+
+Arguments:
+    user: Specify the name of the new user that you want to test (don't use an existing user, they will be deleted after the script has finished running)
+    branch: Git branch you want to use for testing, default branch is main
+```

@@ -6,6 +6,12 @@ ZSH_CUSTOM="$HOME/.oh-my-zsh/custom"
 
 set -e
 
+# Check that the script is being run as root
+if [[ $EUID -ne 0 ]]; then
+   echo "This script must be run as root"
+   exit 1
+fi
+
 function dot {
     git --git-dir="$LOCALREPO_DIR" --work-tree="$HOME" $1
 }
@@ -25,10 +31,12 @@ function usage {
     printf "\n"
     printf "Options:\n"
     printf "    -h Output usage\n"
-    printf "    -i Install the dotfiles, a backup of all affected files\n" 
+    printf "    -i Just install dotfiles, a backup of all affected files\n" 
     printf "       will be created\n"
     printf "    -I Install dependencies that the dotfiles refer to\n"
     printf "    -c Show changes since last version\n"
+    printf "    -t Cleanup installation artifacts\n"
+    printf "    -f Full install of dotfiles and dependencies\n"
     printf "    -d Download dotfiles\n"
     printf "    -b Backup dotfiles (only works if the project has been\n" 
     printf "       downloaded via -d or -i)\n"
@@ -70,8 +78,14 @@ function install {
     echo "installing dotfiles"
     download $1
     backup
-    rsync --recursive --verbose --exclude '.git' $TMP_DIR/ $HOME/
-    rm -rf $TMP_DIR
+    rsync --recursive --verbose --exclude '.git' --exclude 'init_dotfiles.sh' $TMP_DIR/ $HOME/
+}
+
+# -t
+function cleanup {
+    if [ -d "$TMP_DIR" ]; then
+        rm -rf $TMP_DIR
+    fi
 }
 
 function _install_zsh {
@@ -100,7 +114,7 @@ function _install_ohmyzsh {
     fi
 
     echo "installing ohmyzsh ..."
-    sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+    sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended --keep-zshrc
 }
 
 function _install_p10k {
@@ -160,6 +174,9 @@ function install_deps {
     _install_delta
     _install_z
     _install_omz_plugins
+
+    sudo chsh -s $(which zsh) $(whoami)
+    zsh
 }
 
 # -c
@@ -168,6 +185,13 @@ function changes_since_last_tag {
     echo "Files changed: \n"
     dot "diff --name-only $LATEST_TAG HEAD"
     dot "diff $LATEST_TAG HEAD"
+}
+
+# -f
+function fullinstall {
+    install $1
+    install_deps
+    cleanup
 }
 
 if [[ ${#} -eq 0 ]]; then
@@ -183,7 +207,7 @@ if [[ $# -gt 1 ]]; then
     shift
 fi
 
-while getopts ":hdbiVIc" opt; do
+while getopts ":hdbiVIctf" opt; do
     case "${opt}" in
     h)
         usage
@@ -202,6 +226,12 @@ while getopts ":hdbiVIc" opt; do
         ;;
     c)
         changes_since_last_tag
+        ;;
+    t)
+        cleanup
+        ;;
+    t)
+        fullinstall $proto
         ;;
     :)
         echo "$0: -$OPTARG needs an argument." >&2
