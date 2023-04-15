@@ -1,7 +1,3 @@
-if [ -f "$HOME/.bash_aliases" ]; then
-    source "$HOME/.bash_aliases"
-fi
-
 if [ -f "$HOME/.zaliases" ]; then
     source "$HOME/.zaliases"
 fi
