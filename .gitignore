@@ -3,10 +3,15 @@
 .apport-ignore.xml
 .aws
 .azure
+.bash_aliases
 .bash_history
+.bash_logout
+.bash_profile
+.bashrc
 .cache
 .cargo
 .config
+.dir_colors
 .docker
 .dotfile*
 .dotfiles/
@@ -27,6 +32,7 @@
 .pam_environment
 .pdepend
 .pki
+.profile
 .python_history
 .quokka/
 .recently-used
@@ -43,6 +49,8 @@
 .viminfo
 .vscode*
 .wget-hsts
+.Xclients
+.xinitrc
 .z
 .zcompdump
 .zcompdump-*
