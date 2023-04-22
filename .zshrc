@@ -139,3 +139,9 @@ if [ -z "$SSH_AUTH_SOCK" ]; then
       #start ssh-agent
     eval "$(ssh-agent -s)"
 fi
+
+# for WSL2 specify a display to the default network interface that X server uses
+if grep -qEi "(Microsoft|WSL)" /proc/version &> /dev/null ; then
+    export DISPLAY=$(ip route|awk '/^default/{print $3}'):0.0
+    export LIBGL_ALWAYS_INDIRECT=1
+fi
